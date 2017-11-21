@@ -2,7 +2,6 @@ package main
 
 import (
 	"bufio"
-	"fmt"
 	"html/template"
 	"io/ioutil"
 	"os"
