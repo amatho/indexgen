@@ -60,6 +60,9 @@ func main() {
 		if stringInSlice(f.Name(), excludedFiles[:]) {
 			continue
 		}
+		if filepath.Ext(f.Name()) != ".html" || filepath.Ext(f.Name()) != "" {
+			continue
+		}
 
 		var path string
 		var fileType string
@@ -75,7 +78,12 @@ func main() {
 		entries = append(entries, Entry{f.Name(), path, fileType})
 	}
 
-	t, tErr := template.ParseFiles(filepath.Join(pathPrefix, "indextemplate.html"))
+	if len(entries) == 0 {
+		entry := Entry{"No folders or .html files in directory", "", ""}
+		entries = append(entries, entry)
+	}
+
+	t, tErr := template.New("template").Parse(templateString)
 	check(tErr)
 
 	f, fErr := os.Create(filepath.Join(pathPrefix, "index.html"))
