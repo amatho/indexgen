@@ -39,7 +39,6 @@ func check(err error) {
 
 func main() {
 	var pathPrefix string
-	fmt.Println(len(os.Args))
 	if len(os.Args) > 1 {
 		pathPrefix = os.Args[1]
 	}
@@ -50,8 +49,8 @@ func main() {
 
 	var files []os.FileInfo
 	var readErr error
-	if (pathPrefix == "") {
-		files, readErr = ioutil.ReadDir("./")
+	if pathPrefix == "" {
+		files, readErr = ioutil.ReadDir(wd)
 	} else {
 		files, readErr = ioutil.ReadDir(pathPrefix)
 	}
@@ -77,10 +76,10 @@ func main() {
 		entries = append(entries, Entry{f.Name(), path, fileType})
 	}
 
-	t, tErr := template.ParseFiles(pathPrefix + "indextemplate.html")
+	t, tErr := template.ParseFiles(filepath.Join(pathPrefix, "indextemplate.html"))
 	check(tErr)
 
-	f, fErr := os.Create(pathPrefix + "index.html")
+	f, fErr := os.Create(filepath.Join(pathPrefix, "index.html"))
 	check(fErr)
 	defer f.Close()
 
