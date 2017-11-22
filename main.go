@@ -60,7 +60,7 @@ func main() {
 		if stringInSlice(f.Name(), excludedFiles[:]) {
 			continue
 		}
-		if filepath.Ext(f.Name()) != ".html" || filepath.Ext(f.Name()) != "" {
+		if filepath.Ext(f.Name()) != ".html" && filepath.Ext(f.Name()) != "" {
 			continue
 		}
 
